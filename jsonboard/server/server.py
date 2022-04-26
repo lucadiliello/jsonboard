@@ -6,7 +6,7 @@ from typing import Dict, List
 
 from flask import request
 from flask_restful import Resource
-from requests import JSONDecodeError
+from json import JSONDecodeError
 
 
 logger = logging.getLogger(__name__)

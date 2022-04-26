@@ -2,7 +2,7 @@ import logging
 
 from watchdog.events import FileSystemEventHandler
 
-from server.server import Data
+from jsonboard.server.server import Data
 
 
 logger = logging.getLogger(__name__)

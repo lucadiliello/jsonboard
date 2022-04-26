@@ -1,0 +1,2 @@
+graft jsonboard/client/build
+global-exclude *.pyc

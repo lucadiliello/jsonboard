@@ -1,14 +1,14 @@
-import json
 import logging
 from argparse import ArgumentParser
+import sys
 
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_restful import Api
 from watchdog.observers import Observer
 
-from server.handler import JsonboardHandler
-from server.server import Data, DataHandler
+from jsonboard.server.handler import JsonboardHandler
+from jsonboard.server.server import Data, DataHandler
 
 
 logging.basicConfig()
@@ -16,14 +16,9 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-with open('version.json') as fi:
-    version = json.load(fi)
-    version = f"{version['major']}.{version['minor']}.{version['patch']}"
-
-
 def main():
 
-    parser = ArgumentParser(f"Jsonboard UI server, version {version}. Run with `jsonboard --input jsonboard/`")
+    parser = ArgumentParser(f"Jsonboard UI server. Run with `jsonboard --input jsonboard/`")
     parser.add_argument('-i', '--input', type=str, required=True, help="Path to jsonboard experiments directory.")
     parser.add_argument('-p', '--port', type=int, default=1337, required=False, help="Server port.")
     args = parser.parse_args()

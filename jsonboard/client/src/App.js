@@ -8,13 +8,11 @@ import Sidebar from './Components/Sidebar';
 import './App.css';
 
 
-// axios.defaults.baseURL = "http://127.0.0.1:1337";
-
-
 class App extends Component {
 
     state = {
         experiments: {},  // map names experiments to objects with active/data keys
+        loadingError: false,
         settings: {
             theme: 'light',
             interval: 30,
@@ -50,7 +48,7 @@ class App extends Component {
                     )
                 }
             }), callback)})
-            .catch((error) => console.log(error));
+            .catch(error => this.setState({loadingError: true}));
     }
 
     loadData(names, callback) {
@@ -63,8 +61,10 @@ class App extends Component {
                     responses.map(response => Object.entries(response.data)).flat().map(([name, value]) => ([name, {data: {$set: value}}]))
                 )
             }), callback)})
-        ).catch((error) => console.log(error));
+        ).catch(error => this.setState({loadingError: true}));
     }
+
+    resetError = () => this.setState({loadingError: false})
 
     updateData(callback) {
         this.loadData(
@@ -105,8 +105,10 @@ class App extends Component {
                     setTheme={this.setTheme}
                     updateData={this.updateData}
                     setInterval={this.setInterval}
+                    resetError={this.resetError}
                     settings={this.state.settings}
                     experiments={this.state.experiments}
+                    loadingError={this.state.loadingError}
                 />
                 <Main
                     loadData={this.loadData}

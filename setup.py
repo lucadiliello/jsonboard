@@ -1,20 +1,19 @@
-import json
-
 import setuptools
 
-
-with open('version.json') as fi:
-    version = json.load(fi)
-    version = f"{version['major']}.{version['minor']}.{version['patch']}"
+import jsonboard
 
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 
+with open('requirements.txt') as f:
+    requirements = f.readlines()
+
+
 setuptools.setup(
     name='JsonBoard',
-    version=version,
+    version=jsonboard.__version__,
     author='Luca Di Liello',
     author_email='luca.diliello@unitn.it',
     description='Data visualization tool based on JSON files.',
@@ -24,10 +23,11 @@ setuptools.setup(
     project_urls={
         "Bug Tracker": "https://github.com/lucadiliello/jsonboard/issues",
     },
-    classifiers=[
-        "License :: OSI Approved :: GNU v2 License",
-        "Operating System :: OS Independent",
-    ],
-    packages=['jsonboard'],
-    scripts=['scripts/jsonboard'],
+    install_requires=requirements,
+    scripts=['bin/jsonboard'],
+    packages=setuptools.find_packages(exclude=['node_modules', 'public', 'examples']),
+    include_package_data=True,
+    package_data={
+        'client' : ['jsonboard/client/build/*']
+    },
 )
