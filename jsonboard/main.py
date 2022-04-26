@@ -1,6 +1,5 @@
 import logging
 from argparse import ArgumentParser
-import sys
 
 from flask import Flask, send_from_directory
 from flask_cors import CORS
@@ -21,6 +20,9 @@ def main():
     parser = ArgumentParser(f"Jsonboard UI server. Run with `jsonboard --input jsonboard/`")
     parser.add_argument('-i', '--input', type=str, required=True, help="Path to jsonboard experiments directory.")
     parser.add_argument('-p', '--port', type=int, default=1337, required=False, help="Server port.")
+    parser.add_argument('--data_filename', type=str, default='data.jsonl', help="Name of the data files.")
+    parser.add_argument('--hparams_filename', type=str, default='hparams.json', help="Name of the hparams files.")
+    parser.add_argument('--meta_filename', type=str, default='meta.json', help="Name of the metadata files.")
     args = parser.parse_args()
 
     # reading files from folder
@@ -29,7 +31,7 @@ def main():
     api = Api(app)
 
     logger.info("Loading data from disk...")
-    data = Data(args.input)  # load data from disk
+    data = Data(args)  # load data from disk
     data.load_from_disk()
 
     @app.route("/", defaults={'path': ''})
