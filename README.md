@@ -75,7 +75,7 @@ And this is a simple example of how data should be stored:
 ## Run the server
 
 ```bash
-jsonboard --path /pth/to/main_directory
+jsonboard --input /pth/to/main_directory
 ```
 
 ## Additional parameters
