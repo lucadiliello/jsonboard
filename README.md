@@ -23,7 +23,7 @@ pip install jsonboard
     └── ...
 
 And this is a simple example of how data should be stored:
-```json
+```js
 {
     "hparams": {
         "learning_rate": 1e-05,
@@ -59,7 +59,7 @@ And this is a simple example of how data should be stored:
         {
             "step": 4000,
             "values": {
-                // sometimes value may also be missing
+                // sometimes values may also be missing
             }
         },
         {
