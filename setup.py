@@ -1,5 +1,6 @@
-from distutils.core import setup
 import json
+
+import setuptools
 
 
 with open('version.json') as fi:
@@ -7,12 +8,26 @@ with open('version.json') as fi:
     version = f"{version['major']}.{version['minor']}.{version['patch']}"
 
 
-setup(name='JsonBoard',
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
+
+setuptools.setup(
+    name='JsonBoard',
     version=version,
-    description='Data visualization tool based on JSON files.',
     author='Luca Di Liello',
     author_email='luca.diliello@unitn.it',
+    description='Data visualization tool based on JSON files.',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url='https://github.com/lucadiliello/jsonboard',
+    project_urls={
+        "Bug Tracker": "https://github.com/lucadiliello/jsonboard/issues",
+    },
+    classifiers=[
+        "License :: OSI Approved :: GNU v2 License",
+        "Operating System :: OS Independent",
+    ],
     packages=['jsonboard'],
     scripts=['scripts/jsonboard'],
 )

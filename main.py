@@ -10,6 +10,7 @@ from watchdog.observers import Observer
 from server.handler import JsonboardHandler
 from server.server import Data, DataHandler
 
+
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

@@ -8,6 +8,7 @@ from flask import request
 from flask_restful import Resource
 from requests import JSONDecodeError
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -54,7 +55,9 @@ def import_data(path: str) -> Dict[str, Dict[str, Dict]]:
                     logger.warning(f"Didn't find a version for experiment {exp_name}, using 'version_0'.")
                 else:
                     exp_name, version = 'default', 'version_0'
-                    logger.warning(f"Didn't find a version and experiment name for file {filepath}, using 'default/version_0'.")
+                    logger.warning(
+                        f"Didn't find a version and experiment name for file {filepath}, using 'default/version_0'."
+                    )
 
                 try:
                     with open(filepath) as fi:
@@ -62,14 +65,19 @@ def import_data(path: str) -> Dict[str, Dict[str, Dict]]:
                     
                     for name in ('metadata', 'logs', 'hparams'):
                         if name not in loaded:
-                            logger.warning(f"Experiment {filepath} doesn't have an {name} key so no {name} will be shown.")
+                            logger.warning(
+                                f"Experiment {filepath} doesn't have an {name} key so no {name} will be shown."
+                            )
 
                     parse_logs(loaded)
                     final_name = os.path.join(exp_name, version)
                     res[final_name] = loaded
             
                 except JSONDecodeError:
-                    logger.error(f"Experiment {filepath} could not be parsed correctly, make sure it is valid JSON file. Skipping it.")
+                    logger.error(
+                        f"Experiment {filepath} could not be parsed correctly, "
+                        f"make sure it is valid JSON file. Skipping it."
+                    )
 
     return res
 

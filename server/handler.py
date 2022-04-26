@@ -4,6 +4,7 @@ from watchdog.events import FileSystemEventHandler
 
 from server.server import Data
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -19,4 +20,4 @@ class JsonboardHandler(FileSystemEventHandler):
     @classmethod
     def create_datafull_class(cls, data):
         cls.data = data
-        return cls 
+        return cls
