@@ -9,7 +9,7 @@ pip install jsonboard
 
 ## Logging directory
 
-`Jsonboard` expected the logging directory to be structured like the following:
+`JsonBoard` expects the logging directory to be structured like the following:
 
     main_directory
     ├── experiment_name_1
