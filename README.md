@@ -33,7 +33,6 @@ And this is a simple example of how data should be stored:
         "num_warmup_steps": 10000,
         "max_steps": 100000,
         "alpha": 0.5,
-        "adapter": "JointwiseArrowAdapter",
         "train_filepath": "datasets/wikiqa",
     },
     "metadata": {"environment": "google_cloud"},
