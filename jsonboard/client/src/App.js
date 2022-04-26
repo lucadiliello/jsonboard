@@ -8,6 +8,14 @@ import Sidebar from './Components/Sidebar';
 import './App.css';
 
 
+let axiosConfig = {
+    headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+    }
+};
+
+
 class App extends Component {
 
     state = {
@@ -54,11 +62,11 @@ class App extends Component {
     loadData(names, callback) {
         /* Launch many axios requests and update state */
         names = Array.isArray(names) ? names : [names];
-        axios.all(names.map(name => axios.post('/data', {name: name})))
+        axios.all(names.map(name => axios.post('/data', {name: name}, axiosConfig)))
         .then(axios.spread((...responses) => {
             this.setState(prevState => update(prevState, {
                 experiments: Object.fromEntries(
-                    responses.map(response => Object.entries(response.data)).flat().map(([name, value]) => ([name, {data: {$set: value}}]))
+                    responses.map(response => Object.entries(response.data)).flat().map(([name, value]) => [name, {data: {$set: value}}])
                 )
             }), callback)})
         ).catch(error => this.setState({loadingError: true}));
@@ -68,8 +76,7 @@ class App extends Component {
 
     updateData(callback) {
         this.loadData(
-            Object.entries(this.state.experiments).filter(([name, value]) => value.active).map(([name, value]) => name),
-            callback
+            Object.entries(this.state.experiments).filter(([name, value]) => value.active).map(([name, value]) => name), callback
         );
     }
 

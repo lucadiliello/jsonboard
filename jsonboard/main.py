@@ -23,6 +23,7 @@ def main():
     parser.add_argument('--data_filename', type=str, default='data.jsonl', help="Name of the data files.")
     parser.add_argument('--hparams_filename', type=str, default='hparams.json', help="Name of the hparams files.")
     parser.add_argument('--meta_filename', type=str, default='meta.json', help="Name of the metadata files.")
+    parser.add_argument('--step_field', type=str, default='step', help="Field in the logs that should be used as 'step'.")
     args = parser.parse_args()
 
     # reading files from folder

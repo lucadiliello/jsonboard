@@ -4,21 +4,37 @@ import { ResponsiveLine } from '@nivo/line'
 
 class Plot extends Component {
 
+    unique(array) {
+        return [...new Set(array)];
+    }
+
+    partitionArray(number, array) {
+        const step = (array.length - 1) / (number - 1);
+        return this.unique(
+            Array.from(Array(number).keys()).map(i => array[Math.round(step * i)])
+        );
+    }
+
     render() {
         const data = Object.entries(this.props.experiments)
             .filter(([key, value]) => value.active && value.data !== undefined && this.props.metric in value.data.logs)
-            .map(([key, value]) => {
-                return {
+            .map(([key, value]) => ({
                     color: value.color,
                     id: key,
-                    data: value.data.steps.map((step, index) => ({x: step, y: value.data.logs[this.props.metric][index]}))
-                }
-            }
+                    data: this.unique(
+                        value.data.steps
+                        .map((step, index) => ({x: step, y: value.data.logs[this.props.metric][index]}))
+                        .filter(a => a.y !== undefined && a.y !== null)
+                    )
+            })
         );
+
+        const allTickValues = this.unique(Object.values(data).map(e => e.data.map(a => a.x)).flat()).sort(); 
+        const tickValues = this.partitionArray(this.props.plotStyle.nTicks, allTickValues);
 
         return (
             <div style={{ height: '300px' }}>
-                <div style={{ height: '100%', display: 'flex' }}>
+                <div style={{ height: '100%', display: 'flex', minWidth: 0 }}>
                     <ResponsiveLine
                         theme={{background: "#ffffff", textColor: "#333333"}}
                         data={data}
@@ -39,6 +55,8 @@ class Plot extends Component {
                         axisBottom={{
                             orient: 'bottom',
                             tickSize: 5,
+                            tickValues: tickValues,
+                            format: (a) => (a > 10000 ? a.toExponential(1) : a),
                             tickPadding: 5,
                             tickRotation: 0,
                             legend: 'Step',
@@ -50,6 +68,7 @@ class Plot extends Component {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
+                            tickValues: 10,
                             legend: this.props.metric,
                             legendOffset: -40,
                             legendPosition: 'middle'

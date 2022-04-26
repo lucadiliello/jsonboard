@@ -18,14 +18,13 @@ def split_path(path: str) -> List[str]:
     return re.split(f"{os.path.sep}+", path)
 
 
-def parse_logs(data: List[Dict]) -> Tuple[Dict, List]:
+def parse_logs(data: List[Dict], step_field: str = 'step') -> Tuple[Dict, List]:
     r""" Parse and experiment log file and flatten metrics. """
-    other_metrics = set(k for e in data for k in e['values'].keys())
-
-    steps = [e['step'] for e in data]
+    other_metrics = set(k for e in data for k in e.keys() if k != step_field)
+    steps = [e[step_field] for e in data]
     values = {
         metric: [
-            e['values'][metric] if metric in e['values'] else None
+            e[metric] if metric in e else None
             for e in data
         ] for metric in other_metrics
     }
@@ -74,7 +73,7 @@ class Data:
                     data_filename = os.path.join(dirpath, self.args.data_filename)
                     if os.path.isfile(data_filename):
                         with open(data_filename) as fi:
-                            res['logs'], res['steps'] = parse_logs([json.loads(line) for line in fi])
+                            res['logs'], res['steps'] = parse_logs([json.loads(line) for line in fi], step_field=self.args.step_field)
 
                     # hparams
                     hparams_filename = os.path.join(dirpath, self.args.hparams_filename)
@@ -117,19 +116,12 @@ class DataHandler(Resource):
     def post(self):
         args = request.get_json()
         name = args['name'] if 'name' in args else None
-        metric = args['metric'] if 'metric' in args else None
-
-        res = dict(**self.data.logs)
 
         # filter on experiment
         if name is not None:
-            res = {k: v for k, v in res.items() if k == name}
-
-        # filter on metrics
-        if metric is not None:
-            for k in res.keys():
-                res[k]['logs'] = {m: v for m, v in res[k]['logs'].items() if m == metric}
-
+            res = {k: v for k, v in self.data.logs.items() if k == name}
+        else:
+            res = self.data.logs
         return res
 
     @classmethod

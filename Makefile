@@ -6,7 +6,10 @@ env:
 	pip install -r requirements.txt
 
 clean:
-	rm -rf build/ dist/ jsonboard/client/build
+	rm -rf build/ dist/ jsonboard/client/build JsonBoard.egg-info/
+
+client:
+	cd jsonboard/client && npm run build
 
 all: clean
 	cd jsonboard/client && npm run build

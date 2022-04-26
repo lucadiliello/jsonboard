@@ -30,6 +30,7 @@ class Plots extends Component {
             enablePoints: true,
             enableGridX: true,
             enableGridY: true,
+            nTicks: 6,
         }
     }
 
@@ -42,6 +43,7 @@ class Plots extends Component {
         this.setGridX = this.setGridX.bind(this);
         this.setGridY = this.setGridY.bind(this);
         this.setPlotsPerLine = this.setPlotsPerLine.bind(this);
+        this.setNumberTicks = this.setNumberTicks.bind(this);
     }
 
     getMetrics() {
@@ -57,7 +59,10 @@ class Plots extends Component {
     }
 
     setPlotsPerLine(e) {
-        this.setState({ plotsPerLine: e })
+        this.setState({
+            plotsPerLine: e,
+            plotStyle: {...this.state.plotStyle, nTicks: Math.floor(18 / e)}
+        })
     }
 
     setLineType(e) {
@@ -80,6 +85,10 @@ class Plots extends Component {
         this.setState(prevState => update(prevState, { plotStyle: { enableGridY: {$set: e }}}))
     }
 
+    setNumberTicks(e) {
+        this.setState(prevState => update(prevState, { plotStyle: {nTicks: {$set: e }}}))
+    }
+
     render() {
         const allMetrics = this.getMetrics();
         return (
@@ -99,9 +108,15 @@ class Plots extends Component {
                             </Space>
                         </Col>
         
-                        <Col span={6}>
+                        <Col span={3}>
                             <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20}}>
-                                <Slider min={1} max={10} value={this.state.plotStyle.lineWidth} onChange={this.setLineWidth} />
+                                <Slider min={1} max={8} value={this.state.plotStyle.lineWidth} onChange={this.setLineWidth} />
+                            </Space>
+                        </Col>
+
+                        <Col span={3}>
+                            <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20}}>
+                                <Slider min={2} max={20} value={this.state.plotStyle.nTicks} onChange={this.setNumberTicks} />
                             </Space>
                         </Col>
 
@@ -145,7 +160,7 @@ class Plots extends Component {
                     <Row>
                         {allMetrics.map(metric => (
                             <Col span={Math.floor(24 / this.state.plotsPerLine)} key={metric}>
-                                <Plot metric={metric} experiments={this.props.experiments} plotStyle={this.state.plotStyle}/>
+                                <Plot metric={metric} experiments={this.props.experiments} plotStyle={this.state.plotStyle} plotsPerLine={this.state.plotsPerLine}/>
                             </Col>
                         ))}
                     </Row>

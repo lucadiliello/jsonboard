@@ -50,7 +50,7 @@ class Main extends Component {
                             </Tabs>
                         </div>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}><code>JsonBoard v0.1.0, created by Luca Di Liello</code></Footer>
+                    <Footer style={{ textAlign: 'center' }}><code>JsonBoard, created by Luca Di Liello</code></Footer>
                 </Layout>
             </Content>
         )

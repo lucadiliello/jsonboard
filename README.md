@@ -53,37 +53,17 @@ pip install jsonboard
 
 #### `data.jsonl`
 
+Some field may even be `null`, the corresponding points will not be plotted.
+
 ```js
-{
-    "step": 1000,
-    "values": {
-        "training/accuracy": 0.9
-    }
-}
-{
-    "step": 2000,
-    "values": {
-        "training/accuracy": 0.5
-    }
-}
-{
-    "step": 3000,
-    "values": {
-        "training/accuracy": 0.5
-    }
-}
-{
-    "step": 4000,
-    "values": {
-        // sometimes values may also be missing
-    }
-}
-{
-    "step": 5000,
-    "values": {
-        "training/accuracy": 0.2
-    }
-}
+{ "step": 1000, "training/accuracy": 0.9 }
+{ "step": 2000, "training/accuracy": 0.7 }
+{ "step": 3000, "training/accuracy": 0.6 }
+{ "step": 4000, "training/accuracy": 0.4 }
+{ "step": 5000, "training/accuracy": 0.3 }
+{ "step": 6000, "training/accuracy": 0.1 }
+{ "step": 7000, "training/accuracy": null }
+{ "step": 7000 }
 ```
 
 
