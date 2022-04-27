@@ -7,7 +7,8 @@ from flask_restful import Api
 from watchdog.observers import Observer
 
 from jsonboard.server.handler import JsonboardHandler
-from jsonboard.server.server import Data, DataHandler
+from jsonboard.server.data import Data
+from jsonboard.server.server import DataHandler
 
 
 logging.basicConfig()
@@ -31,7 +32,6 @@ def main():
     CORS(app)
     api = Api(app)
 
-    logger.info("Loading data from disk...")
     data = Data(args)  # load data from disk
     data.load_from_disk()
 

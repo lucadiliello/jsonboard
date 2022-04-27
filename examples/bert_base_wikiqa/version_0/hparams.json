@@ -1,0 +1,18 @@
+{
+    "pre_trained_config": "bert-base-cased",
+    "pre_trained_model": "bert-base-cased",
+    "pre_trained_tokenizer": "bert-base-cased",
+    "learning_rate": 5e-06,
+    "batch_size": 16,
+    "devices": 4,
+    "accelerator": "gpu",
+    "strategy": "ddp",
+    "num_warmup_steps": 100,
+    "max_steps": 1000,
+    "train_filepath": "datasets/wikiqa",
+    "valid_filepath": "datasets/wikiqa",
+    "test_filepath": "datasets/wikiqa",
+    "train_split": "train",
+    "valid_split": "dev",
+    "test_split": "test"
+}

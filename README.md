@@ -1,5 +1,5 @@
 # jsonboard
-Fancy interface for ML experiments based on JSONL log files.
+Fancy interface for ML experiments based on JSON/JSONL log files.
 
 ## Install
 
@@ -25,7 +25,12 @@ pip install jsonboard
     │       └── data.jsonl
     └── ...
 
+`data.jsonl` is not just a JSON to enable easy appending of new results.
+
+
 ### Examples
+
+Follow a few log files to take as example.
 
 #### `hparams.json`
 
@@ -66,15 +71,26 @@ Some field may even be `null`, the corresponding points will not be plotted.
 { "step": 7000 }
 ```
 
+An example of loggings directory is `examples/`.
+
 
 ## Run the server
 
+Start the server with:
 ```bash
-jsonboard --input /pth/to/main_directory
+jsonboard --input /path/to/logging/dir
 ```
+
+or just try our framework by running the following (you must download the `examples/` folder):
+
+```bash
+jsonboard --input examples/
+```
+
 
 ## Additional parameters
 
+List additional CLI parameters with:
 ```bash
 jsonboard --help
 ```

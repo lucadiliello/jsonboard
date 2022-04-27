@@ -3,7 +3,7 @@ import SearchTable from "./SearchTable";
 
 class Metadata extends SearchTable {
 
-    field = "metadata"
+    field = "meta"
 
 }
 
