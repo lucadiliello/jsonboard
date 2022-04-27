@@ -103,10 +103,10 @@ class Plots extends Component {
                         <Col span={4}>
                             <Input size="large" value={this.state.search} placeholder="search logs" onChange={this.updateSearch} prefix={<SearchOutlined />} />
                         </Col>
-                        <Col span={2}>
+                        <Col span={3}>
                             <Space align="center" direction="horizontal" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20 }}>
                                 <Tooltip title="Line type">
-                                    <Select value={this.state.plotStyle.lineType} onChange={this.setLineType}>
+                                    <Select value={this.state.plotStyle.lineType} style={{ width: 120 }} onChange={this.setLineType}>
                                         {lineTypeMenu.map(item => <Select.Option value={item.key} key={item.key}>{item.label}</Select.Option>)}
                                     </Select>
                                 </Tooltip>
@@ -114,20 +114,20 @@ class Plots extends Component {
                         </Col>
 
                         <Col span={3}>
-                            <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20}}>
+                            <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 10, paddingLeft: 10}}>
                                 <Slider min={1} max={8} value={this.state.plotStyle.lineWidth} onChange={this.setLineWidth} />
                             </Space>
                         </Col>
 
                         <Col span={3}>
-                            <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20}}>
+                            <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 10, paddingLeft: 10}}>
                                 <Slider min={2} max={25} value={this.state.plotStyle.nTicks} onChange={this.setNumberTicks} />
                             </Space>
                         </Col>
 
                         <Col span={3}>
-                            <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20}}>
-                                <Slider min={100} max={1000} step={50} value={this.state.plotStyle.height} onChange={this.setPlotHeight} />
+                            <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 10, paddingLeft: 10}}>
+                                <Slider min={200} max={1000} step={50} value={this.state.plotStyle.height} onChange={this.setPlotHeight} />
                             </Space>
                         </Col>
 
@@ -155,7 +155,7 @@ class Plots extends Component {
                             </Space>
                         </Col>
 
-                        <Col span={6}>
+                        <Col span={5}>
                             <Tooltip title="Plots per line">
                                 <Segmented
                                     block

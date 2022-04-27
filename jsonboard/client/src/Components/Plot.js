@@ -37,7 +37,7 @@ class Plot extends Component {
         const tickValues = this.partitionArray(this.props.plotStyle.nTicks, allTickValues);
 
         return (
-            <Card title={this.props.metric} bodyStyle={{padding: 0, margin: 0}} bordered>
+            <Card title={this.props.metric} bodyStyle={{ padding: 0, margin: 0 }} bordered>
                 <div style={{ height: this.props.plotStyle.height, width: '100%' }}>
                     <ResponsiveLine
                         data={data}
@@ -70,9 +70,6 @@ class Plot extends Component {
                             tickPadding: 5,
                             tickRotation: 0,
                             tickValues: 10,
-                            legend: this.props.metric,
-                            legendOffset: -40,
-                            legendPosition: 'middle',
                             type: 'linear',
                         }}
                         colors={d => d.color}
@@ -90,10 +87,10 @@ class Plot extends Component {
                         pointBorderWidth={2}
                         pointBorderColor={{ from: 'serieColor' }}
                         pointLabelYOffset={-12}
-                        useMesh={true}                    
+                        useMesh={true}
                     />
-                </Card>
-            </div>
+                </div>
+            </Card>
         )
     }
 }
