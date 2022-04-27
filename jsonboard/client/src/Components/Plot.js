@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { ResponsiveLine } from '@nivo/line';
+import { Card } from 'antd';
 
 
 const sliceToolTip = ({ slice }) => <div style={{ background: 'white', padding: '4px 6px', border: '2px solid #ccc' }}>
@@ -36,60 +37,62 @@ class Plot extends Component {
         const tickValues = this.partitionArray(this.props.plotStyle.nTicks, allTickValues);
 
         return (
-            <div style={{ height: this.props.plotStyle.height, width: '100%' }}>
-                <ResponsiveLine
-                    data={data}
-                    xScale={{ type: 'point' }}
-                    yScale={{
-                        type: 'linear',
-                        min: 'auto',
-                        max: 'auto',
-                        reverse: false
-                    }}
-                    yFormat=" >-.2f"
-                    curve={this.props.plotStyle.lineType}
-                    axisTop={null}
-                    axisRight={null}
-                    axisBottom={{
-                        orient: 'bottom',
-                        tickSize: 5,
-                        tickValues: tickValues,
-                        format: (a) => (a > 10000 ? a.toExponential(1) : a),
-                        tickPadding: 5,
-                        tickRotation: 0,
-                        legend: 'Step',
-                        legendOffset: 30,
-                        legendPosition: 'middle',
-                        type: 'linear',
-                    }}
-                    axisLeft={{
-                        orient: 'left',
-                        tickSize: 5,
-                        tickPadding: 5,
-                        tickRotation: 0,
-                        tickValues: 10,
-                        legend: this.props.metric,
-                        legendOffset: -40,
-                        legendPosition: 'middle',
-                        type: 'linear',
-                    }}
-                    colors={d => d.color}
-                    margin={{ top: 20, right: 50, bottom: 50, left: 60 }}
-                    theme={{ background: "#ffffff", textColor: "#333333" }}
-                    enableSlices='x'
-                    sliceTooltip={sliceToolTip}
-                    enablePoints={this.props.plotStyle.enablePoints}
-                    enableGridY={this.props.plotStyle.enableGridY}
-                    enableGridX={this.props.plotStyle.enableGridX}
-                    gridXValues={tickValues}
-                    lineWidth={this.props.plotStyle.lineWidth}
-                    pointSize={8}
-                    pointColor={{ theme: 'background' }}
-                    pointBorderWidth={2}
-                    pointBorderColor={{ from: 'serieColor' }}
-                    pointLabelYOffset={-12}
-                    useMesh={true}                    
-                />
+            <Card title={this.props.metric} bodyStyle={{padding: 0, margin: 0}} bordered>
+                <div style={{ height: this.props.plotStyle.height, width: '100%' }}>
+                    <ResponsiveLine
+                        data={data}
+                        xScale={{ type: 'point' }}
+                        yScale={{
+                            type: 'linear',
+                            min: 'auto',
+                            max: 'auto',
+                            reverse: false
+                        }}
+                        yFormat=" >-.2f"
+                        curve={this.props.plotStyle.lineType}
+                        axisTop={null}
+                        axisRight={null}
+                        axisBottom={{
+                            orient: 'bottom',
+                            tickSize: 5,
+                            tickValues: tickValues,
+                            format: (a) => (a > 10000 ? a.toExponential(1) : a),
+                            tickPadding: 5,
+                            tickRotation: 0,
+                            legend: 'Step',
+                            legendOffset: 30,
+                            legendPosition: 'middle',
+                            type: 'linear',
+                        }}
+                        axisLeft={{
+                            orient: 'left',
+                            tickSize: 5,
+                            tickPadding: 5,
+                            tickRotation: 0,
+                            tickValues: 10,
+                            legend: this.props.metric,
+                            legendOffset: -40,
+                            legendPosition: 'middle',
+                            type: 'linear',
+                        }}
+                        colors={d => d.color}
+                        margin={{ top: 20, right: 50, bottom: 50, left: 60 }}
+                        theme={{ background: "#ffffff", textColor: "#333333" }}
+                        enableSlices='x'
+                        sliceTooltip={sliceToolTip}
+                        enablePoints={this.props.plotStyle.enablePoints}
+                        enableGridY={this.props.plotStyle.enableGridY}
+                        enableGridX={this.props.plotStyle.enableGridX}
+                        gridXValues={tickValues}
+                        lineWidth={this.props.plotStyle.lineWidth}
+                        pointSize={8}
+                        pointColor={{ theme: 'background' }}
+                        pointBorderWidth={2}
+                        pointBorderColor={{ from: 'serieColor' }}
+                        pointLabelYOffset={-12}
+                        useMesh={true}                    
+                    />
+                </Card>
             </div>
         )
     }
