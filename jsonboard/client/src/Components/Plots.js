@@ -27,10 +27,11 @@ class Plots extends Component {
         plotStyle: {
             lineType: "linear",
             lineWidth: 3,
-            enablePoints: true,
+            enablePoints: false,
             enableGridX: true,
             enableGridY: true,
-            nTicks: 6,
+            nTicks: 7,
+            height: 300,
         }
     }
 
@@ -44,14 +45,14 @@ class Plots extends Component {
         this.setGridY = this.setGridY.bind(this);
         this.setPlotsPerLine = this.setPlotsPerLine.bind(this);
         this.setNumberTicks = this.setNumberTicks.bind(this);
+        this.setPlotHeight = this.setPlotHeight.bind(this);
     }
 
     getMetrics() {
         return Array.from(new Set(
-            Object.values(this.props.experiments)
-                .filter(value => value.active && (value.data !== undefined))
-                .map(value => Object.keys(value.data.logs)).flat().filter(metric => metric.includes(this.state.search))
-        ));
+            Object.values(this.props.experiments).filter(value => value.active && (value.data !== undefined))
+                .map(value => value.data.metrics).flat().filter(metric => metric.includes(this.state.search))
+        )).sort();
     }
 
     updateSearch(e) {
@@ -61,7 +62,7 @@ class Plots extends Component {
     setPlotsPerLine(e) {
         this.setState({
             plotsPerLine: e,
-            plotStyle: {...this.state.plotStyle, nTicks: Math.floor(18 / e)}
+            plotStyle: {...this.state.plotStyle, nTicks: Math.floor(18 / e) + 1}
         })
     }
 
@@ -89,25 +90,29 @@ class Plots extends Component {
         this.setState(prevState => update(prevState, { plotStyle: {nTicks: {$set: e }}}))
     }
 
+    setPlotHeight(e) {
+        this.setState(prevState => update(prevState, { plotStyle: {height: {$set: e }}}))
+    }
+
     render() {
         const allMetrics = this.getMetrics();
         return (
             <div>
                 <Card title={
                     <Row>
-                        <Col span={6}>
+                        <Col span={4}>
                             <Input size="large" value={this.state.search} placeholder="search logs" onChange={this.updateSearch} prefix={<SearchOutlined />} />
                         </Col>
-                        <Col span={3}>
+                        <Col span={2}>
                             <Space align="center" direction="horizontal" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20 }}>
                                 <Tooltip title="Line type">
-                                    <Select value={this.state.plotStyle.lineType} style={{ width: 120 }} onChange={this.setLineType}>
+                                    <Select value={this.state.plotStyle.lineType} onChange={this.setLineType}>
                                         {lineTypeMenu.map(item => <Select.Option value={item.key} key={item.key}>{item.label}</Select.Option>)}
                                     </Select>
                                 </Tooltip>
                             </Space>
                         </Col>
-        
+
                         <Col span={3}>
                             <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20}}>
                                 <Slider min={1} max={8} value={this.state.plotStyle.lineWidth} onChange={this.setLineWidth} />
@@ -116,7 +121,13 @@ class Plots extends Component {
 
                         <Col span={3}>
                             <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20}}>
-                                <Slider min={2} max={20} value={this.state.plotStyle.nTicks} onChange={this.setNumberTicks} />
+                                <Slider min={2} max={25} value={this.state.plotStyle.nTicks} onChange={this.setNumberTicks} />
+                            </Space>
+                        </Col>
+
+                        <Col span={3}>
+                            <Space direction="vertical" style={{ display: 'flex', padding: 4, paddingRight: 20, paddingLeft: 20}}>
+                                <Slider min={100} max={1000} step={50} value={this.state.plotStyle.height} onChange={this.setPlotHeight} />
                             </Space>
                         </Col>
 
@@ -166,7 +177,6 @@ class Plots extends Component {
                     </Row>
                 </Card>
             </div>
-
         )
     }
 }

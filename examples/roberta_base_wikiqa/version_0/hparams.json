@@ -1,0 +1,18 @@
+{
+    "pre_trained_config": "roberta-base",
+    "pre_trained_model": "roberta-base",
+    "pre_trained_tokenizer": "roberta-base",
+    "learning_rate": 1e-05,
+    "batch_size": 32,
+    "devices": 8,
+    "accelerator": "gpu",
+    "strategy": "ddp",
+    "num_warmup_steps": 100,
+    "max_steps": 1000,
+    "train_filepath": "datasets/wikiqa",
+    "valid_filepath": "datasets/wikiqa",
+    "test_filepath": "datasets/wikiqa",
+    "train_split": "train",
+    "valid_split": "dev",
+    "test_split": "test"
+}
