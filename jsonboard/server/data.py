@@ -21,7 +21,7 @@ def split_path(path: str) -> List[str]:
 
 def merge_states(states: List[Dict], reduce_fn: Callable = np.mean) -> Dict:
     r""" Merge many states into a single one. """
-    return {k: reduce_fn([state[k] for state in states]) for k in states[0].keys()}
+    return {k: reduce_fn([state[k] for state in states if k in state]) for k in states[0].keys()}
 
 
 def collapse_logs(data: List[Dict], max_length: int = 100, reduce_fn: Callable = np.mean):
